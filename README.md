@@ -15,9 +15,9 @@ Vue.component('height-tween', require 'vue-height-tween-transition')
 ```html
 <!-- Transition between quotes as shown in the screen capture -->
 <div class='quotes'>
-	<height-tween tween='fade' mode='out-in'>
-		<quote :key='quote.id' :quote='quote'></quote>
-	</height-tween>
+  <height-tween tween='fade' mode='out-in'>
+    <quote :key='quote.id' :quote='quote'></quote>
+  </height-tween>
 </div>
 ```
 
