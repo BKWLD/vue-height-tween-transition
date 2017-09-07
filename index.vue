@@ -32,10 +32,10 @@ module.exports =
 	data: -> height: null
 
 	# Store a refrence to the parent
-	mounted: -> @$parent = @$el.parentElement
+	mounted: -> @parent = @$el.parentElement
 
 	# Watch for the height to change and update the parent element
-	watch: height: (val) -> @$parent.style.height = if val then "#{val}px" else ''
+	watch: height: (val) -> @parent.style.height = if val then "#{val}px" else ''
 
 	methods:
 
@@ -51,7 +51,7 @@ module.exports =
 		# Clear the height after the transition ends
 		afterEnter: (el) ->
 			@height = null
-			@$parent.classList.remove 'height-tweening'
+			@parent.classList.remove 'height-tweening'
 
 </script>
 
