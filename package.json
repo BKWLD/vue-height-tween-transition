@@ -1,6 +1,6 @@
 {
   "name": "vue-height-tween-transition",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Tween the height of the parent of transitioning items",
   "main": "index.js",
   "repository": "git@github.com:BKWLD/vue-height-tween-transition.git",
