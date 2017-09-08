@@ -250,7 +250,7 @@ module.exports = {
   },
   methods: {
     beforeLeave: function(el) {
-      return this.$parent.classList.add('height-tweening');
+      return this.parent.classList.add('height-tweening');
     },
     leave: function(el) {
       return this.height = el.clientHeight;
