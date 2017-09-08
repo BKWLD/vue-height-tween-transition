@@ -40,7 +40,7 @@ module.exports =
 	methods:
 
 		# Add transition class to parent
-		beforeLeave: (el) -> @$parent.classList.add 'height-tweening'
+		beforeLeave: (el) -> @parent.classList.add 'height-tweening'
 
 		# Capture the height of the leaving element
 		leave: (el) -> @height = el.clientHeight
