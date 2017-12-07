@@ -253,10 +253,14 @@ module.exports = {
       return this.parent.classList.add('height-tweening');
     },
     leave: function(el) {
-      return this.height = el.clientHeight;
+      return this.$nextTick(function() {
+        return this.height = el.clientHeight;
+      });
     },
     enter: function(el) {
-      return this.height = el.clientHeight;
+      return this.$nextTick(function() {
+        return this.height = el.clientHeight;
+      });
     },
     afterEnter: function(el) {
       this.height = null;
