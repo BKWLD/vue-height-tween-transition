@@ -42,11 +42,13 @@ module.exports =
 		# Add transition class to parent
 		beforeLeave: (el) -> @parent.classList.add 'height-tweening'
 
-		# Capture the height of the leaving element
-		leave: (el) -> @height = el.clientHeight
+		# Capture the height of the leaving element after waiting a tick to make
+		# sure DOM updates are finished
+		leave: (el) -> @$nextTick -> @height = el.clientHeight
 
-		# Capture the height of the entering element
-		enter: (el) -> @height = el.clientHeight
+		# Capture the height of the entering element after waiting a tick to make
+		# sure DOM updates are finished
+		enter: (el) -> @$nextTick -> @height = el.clientHeight
 
 		# Clear the height after the transition ends
 		afterEnter: (el) ->
