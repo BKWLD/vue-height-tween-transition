@@ -12,7 +12,7 @@ import 'vue-height-tween-transition/index.css'
 Vue.component('height-tween', require('vue-height-tween-transition'))
 ```
 
-```
+```vue
 <template>
   <div class='quotes'>
    <height-tween name='fade' mode='out-in'>
