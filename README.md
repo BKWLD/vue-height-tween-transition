@@ -13,12 +13,28 @@ Vue.component('height-tween', require('vue-height-tween-transition'))
 ```
 
 ```
-<!-- Transition between quotes as shown in the screen capture -->
-<div class='quotes'>
-  <height-tween name='fade' mode='out-in'>
-    <quote :key='quote.id' :quote='quote'></quote>
-  </height-tween>
-</div>
+<template>
+  <div class='quotes'>
+   <height-tween name='fade' mode='out-in'>
+      <quote :key='quote.id' :quote='quote'></quote>
+   </height-tween>
+  </div>
+</template>
+
+<script>
+export default {
+  data: function () {
+    quotes: [{ id: 1, quote: 'Text' }, { id: 2, quote: 'Another'}],
+    active: 0,
+   },
+  computed: {
+    quote: function () { return this.quotes[this.active] }
+  },
+  methods: {
+    next: function() { this.active++ }
+  },
+}
+</script>
 ```
 
 Works with `v-if` transitions as well as `:key` based transitions.
