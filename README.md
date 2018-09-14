@@ -1,6 +1,6 @@
 # Vue Height Tween Transition
 
-Tween the height of the parent of transitioning items.
+Tweens between heights of slotted items.
 
 ![](http://yo.bkwld.com/0w3s302M0o2G/Screen%20Recording%202017-09-06%20at%2010.15%20AM.gif)
 
@@ -9,7 +9,7 @@ Tween the height of the parent of transitioning items.
 ```javascript
 // Add component
 import 'vue-height-tween-transition/index.css'
-Vue.component('height-tween', require 'vue-height-tween-transition')
+Vue.component('height-tween', require('vue-height-tween-transition'))
 ```
 
 ```html
@@ -20,6 +20,8 @@ Vue.component('height-tween', require 'vue-height-tween-transition')
   </height-tween>
 </div>
 ```
+
+Works with `v-if` transitions as well as `:key` based transitions.
 
 ## Notes
 
