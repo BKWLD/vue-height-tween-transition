@@ -4,14 +4,19 @@ Tween the height of the parent of transitioning items
 
 <template lang='pug'>
 
-transition(
-	:name='name'
-	:mode='mode'
-	@beforeLeave='beforeLeave'
-	@leave='leave'
-	@enter='enter'
-	@afterEnter='afterEnter')
-	slot
+.height-tween-mask(
+	:class='{ "height-tweening": tweening }'
+	:style='styles')
+	transition(
+		:name='name'
+		:mode='mode'
+		@beforeLeave='beforeLeave'
+		@leave='leave'
+		@afterLeave='leave'
+		@beforeEnter='beforeEnter'
+		@enter='enter'
+		@afterEnter='afterEnter')
+		slot
 
 </template>
 
@@ -27,33 +32,48 @@ module.exports =
 
 		# Same as Vue transition `mode` property
 		mode: String
+		
+		open:
+			type: Boolean
+			default: true
 
-	# Stores the height that will be set on the parent
-	data: -> height: null
-
-	# Store a refrence to the parent
-	mounted: -> @parent = @$el.parentElement
-
-	# Watch for the height to change and update the parent element
-	watch: height: (val) -> @parent.style.height = if val then "#{val}px" else ''
+	data: -> 
+		height: null # Stores the height that will be set on the parent
+		tweening: false # Are we currently tweening
+		
+	computed:
+		
+		# Make the height style
+		styles: -> height: "#{@height}px" if @height != null
+		
+		# Are we transitioning to a new 
 
 	methods:
 
-		# Add transition class to parent
-		beforeLeave: (el) -> @parent.classList.add 'height-tweening'
+		# Add clases to parent
+		beforeLeave: (el) -> @tweening = true
+		beforeEnter: (el) -> @tweening = true
 
-		# Capture the height of the leaving element after waiting a tick to make
-		# sure DOM updates are finished
-		leave: (el) -> @$nextTick -> @height = el.clientHeight
+		# If switching to a new slot, store the old height.  Else, store and then
+		# tween to 0
+		leave: (el) -> @$nextTick -> 
+			@height = el.clientHeight
+			setTimeout (=> @height = 0), 0 unless @$slots.default
+
+		# If we were closing (not transitioning to a new component), clear settings
+		afterLeave: (el) -> @reset() unless @$slots.default
 
 		# Capture the height of the entering element after waiting a tick to make
 		# sure DOM updates are finished
 		enter: (el) -> @$nextTick -> @height = el.clientHeight
 
 		# Clear the height after the transition ends
-		afterEnter: (el) ->
+		afterEnter: (el) -> @reset()
+		
+		# Reset the state
+		reset: ->
 			@height = null
-			@parent.classList.remove 'height-tweening'
+			@tweening = false
 
 </script>
 
@@ -66,5 +86,6 @@ module.exports =
 // Tween between heights
 .height-tweening
 	transition height .3s ease-out-quad
+	overflow hidden
 
 </style>
