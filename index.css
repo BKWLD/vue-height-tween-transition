@@ -1,1 +1,1 @@
-.height-tweening{-webkit-transition:height .3s cubic-bezier(.25,.46,.45,.94);transition:height .3s cubic-bezier(.25,.46,.45,.94)}
+.height-tweening{-webkit-transition:height .3s cubic-bezier(.25,.46,.45,.94);transition:height .3s cubic-bezier(.25,.46,.45,.94);overflow:hidden}
