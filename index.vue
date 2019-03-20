@@ -64,8 +64,10 @@ module.exports =
 		afterLeave: (el) -> @reset() unless @$slots.default
 
 		# Capture the height of the entering element after waiting a tick to make
-		# sure DOM updates are finished
-		enter: (el) -> @$nextTick -> @height = el.clientHeight
+		# sure DOM updates are finished.  Using setTimeout rather than nextTick so
+		# it fires a frame after the height change in "leave" in the case of a
+		# simultaneous (mode='') transition.
+		enter: (el) ->  setTimeout (=> @height = el.clientHeight), 0
 
 		# Clear the height after the transition ends
 		afterEnter: (el) -> @reset()
