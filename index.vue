@@ -12,7 +12,7 @@ Tween the height of the parent of transitioning items
 		:mode='mode'
 		@beforeLeave='beforeLeave'
 		@leave='leave'
-		@afterLeave='leave'
+		@afterLeave='afterLeave'
 		@beforeEnter='beforeEnter'
 		@enter='enter'
 		@afterEnter='afterEnter')
