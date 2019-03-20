@@ -279,9 +279,11 @@ module.exports = {
       }
     },
     enter: function(el) {
-      return this.$nextTick(function() {
-        return this.height = el.clientHeight;
-      });
+      return setTimeout(((function(_this) {
+        return function() {
+          return _this.height = el.clientHeight;
+        };
+      })(this)), 0);
     },
     afterEnter: function(el) {
       return this.reset();
