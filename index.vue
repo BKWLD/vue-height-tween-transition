@@ -8,6 +8,7 @@ Tween the height of the parent of transitioning items
 	:class='{ "height-tweening": tweening }'
 	:style='styles')
 	transition(
+		:duration='duration'
 		:name='name'
 		:mode='mode'
 		@beforeLeave='beforeLeave'
@@ -32,21 +33,26 @@ module.exports =
 
 		# Same as Vue transition `mode` property
 		mode: String
-		
+
+		# Same as Vue transition `duration` property
+		duration:
+			type: Number
+			default: null
+
 		open:
 			type: Boolean
 			default: true
 
-	data: -> 
+	data: ->
 		height: null # Stores the height that will be set on the parent
 		tweening: false # Are we currently tweening
-		
+
 	computed:
-		
+
 		# Make the height style
 		styles: -> height: "#{@height}px" if @height != null
-		
-		# Are we transitioning to a new 
+
+		# Are we transitioning to a new
 
 	methods:
 
@@ -56,7 +62,7 @@ module.exports =
 
 		# If switching to a new slot, store the old height.  Else, store and then
 		# tween to 0
-		leave: (el) -> @$nextTick -> 
+		leave: (el) -> @$nextTick ->
 			@height = el.clientHeight
 			setTimeout (=> @height = 0), 0 unless @$slots.default
 
@@ -71,7 +77,7 @@ module.exports =
 
 		# Clear the height after the transition ends
 		afterEnter: (el) -> @reset()
-		
+
 		# Reset the state
 		reset: ->
 			@height = null
@@ -82,12 +88,10 @@ module.exports =
 <!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– -->
 
 <style lang='stylus'>
-
 @import '~bukwild-stylus-library'
 
 // Tween between heights
 .height-tweening
-	transition height .3s ease-out-quad
-	overflow hidden
-
+  overflow hidden
+  transition height 0.3s ease-out-quad
 </style>
