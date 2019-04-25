@@ -73,7 +73,9 @@ module.exports =
 		# sure DOM updates are finished.  Using setTimeout rather than nextTick so
 		# it fires a frame after the height change in "leave" in the case of a
 		# simultaneous (mode='') transition.
-		enter: (el) ->  setTimeout (=> @height = el.clientHeight), 0
+		enter: (el) -> 
+			@height = 0 # Used when triggered by v-if
+			setTimeout (=> @height = el.clientHeight), 0
 
 		# Clear the height after the transition ends
 		afterEnter: (el) -> @reset()
