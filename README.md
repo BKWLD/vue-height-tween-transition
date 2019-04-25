@@ -4,6 +4,8 @@ Tweens between heights of default slotted element.
 
 ![](http://yo.bkwld.com/0w3s302M0o2G/Screen%20Recording%202017-09-06%20at%2010.15%20AM.gif)
 
+Demo: https://bkwld.github.io/vue-height-tween-transition/
+
 ## Usage
 
 ```javascript
