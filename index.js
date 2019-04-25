@@ -171,6 +171,8 @@ module.exports = {
     enter: function enter(el) {
       var _this2 = this;
 
+      this.height = 0; // Used when triggered by v-if
+
       return setTimeout(function () {
         return _this2.height = el.clientHeight;
       }, 0);
