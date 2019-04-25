@@ -1,1 +1,5 @@
-.height-tweening{overflow:hidden;-webkit-transition:height .3s cubic-bezier(.25,.46,.45,.94);transition:height .3s cubic-bezier(.25,.46,.45,.94)}
+.height-tweening {
+  overflow: hidden;
+  transition: height 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
