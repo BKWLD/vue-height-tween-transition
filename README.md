@@ -14,10 +14,12 @@ import 'vue-height-tween-transition/index.css'
 Vue.component('height-tween', require('vue-height-tween-transition'))
 ```
 
+#### Switching mode - Simultaneous
+
 ```vue
 <template>
   <div class='quotes'>
-   <height-tween name='fade' mode='out-in'>
+   <height-tween switching name='fade'>
       <quote :key='quote.id' :quote='quote'></quote>
    </height-tween>
   </div>
@@ -25,10 +27,10 @@ Vue.component('height-tween', require('vue-height-tween-transition'))
 
 <script>
 export default {
-  data: function () {
+  data: function () { return {
     quotes: [{ id: 1, quote: 'Text' }, { id: 2, quote: 'Another'}],
     active: 0,
-   },
+  }},
   computed: {
     quote: function () { return this.quotes[this.active] }
   },
@@ -37,9 +39,89 @@ export default {
   },
 }
 </script>
+<style>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+.fade-leave-active {
+  position: absolute;
+  width: 100%;
+}
+</style>
 ```
 
-Works with `v-if` transitions as well as `:key` based transitions.
+#### Switching mode - Out-In
+
+```vue
+<template>
+  <div class='quotes'>
+   <height-tween switching name='fade' mode='out-in'>
+      <quote :key='quote.id' :quote='quote'></quote>
+   </height-tween>
+  </div>
+</template>
+
+<script>
+export default {
+  data: function () { return {
+    quotes: [{ id: 1, quote: 'Text' }, { id: 2, quote: 'Another'}],
+    active: 0,
+  }},
+  computed: {
+    quote: function () { return this.quotes[this.active] }
+  },
+  methods: {
+    next: function() { this.active++ }
+  },
+}
+</script>
+<style>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>
+```
+
+#### Toggle (Accordion) mode
+
+```vue
+<template>
+  <div class='quotes'>
+   <height-tween name='fade'>
+      <quote :v-if='quote' :quote='quote'></quote>
+   </height-tween>
+  </div>
+</template>
+
+<script>
+export default {
+  data: function () { return {
+    quote: { id: 1, quote: 'Text' },
+  }},
+}
+</script>
+<style>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>
+```
+
 
 ## Notes
 
