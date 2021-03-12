@@ -97,7 +97,7 @@ export default {
 ```vue
 <template>
   <div class='quotes'>
-   <height-tween name='fade'>
+   <height-tween :duration='300'>
       <quote :v-if='quote' :quote='quote'></quote>
    </height-tween>
   </div>
@@ -110,16 +110,6 @@ export default {
   }},
 }
 </script>
-<style>
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.3s;
-}
-.fade-enter,
-.fade-leave-to {
-  opacity: 0;
-}
-</style>
 ```
 
 
