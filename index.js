@@ -195,46 +195,54 @@ only fired after afterLeave finishes.
     // toggling close
     beforeLeave: function beforeLeave(el) {
       this.height = el.clientHeight;
-      console.log('beforeLeave', this.height);
-      return this.isTweening = true;
+      this.isTweening = true;
+      return this.$emit('beforeLeave', el);
     },
     // When toggling, set the initial height to 0
-    beforeEnter: function beforeEnter() {
+    beforeEnter: function beforeEnter(el) {
       this.isTweening = true;
 
       if (!this.switching) {
-        return this.height = 0;
+        this.height = 0;
       }
+
+      return this.$emit('beforeEnter', el);
     },
     // When leaving, if toggling, set the height to 0 after a tick.
     leave: function leave(el) {
       var _this = this;
 
       if (!this.switching) {
-        return setTimeout(function () {
+        setTimeout(function () {
           return _this.height = 0;
         }, 0);
       }
+
+      return this.$emit('leave', el);
     },
     // When entering, always set the new height after a tick.
     enter: function enter(el) {
-      return this.$nextTick(function () {
+      this.$nextTick(function () {
         return this.height = el.clientHeight;
       });
+      return this.$emit('enter', el);
     },
     // Reset the state unless we're doing an out-in transition, in which case
     // this should get triggered on enter.
-    afterLeave: function afterLeave() {
+    afterLeave: function afterLeave(el) {
       if (this.mode !== 'out-in') {
-        return this.reset();
+        this.reset();
       }
+
+      return this.$emit('afterLeave', el);
     },
     // Clear the height after enter finishes in all cases. This is valid
     // because either it's a toggle animation and this won't get called at all
     // when v-if="false" or we're switching and it fires at the end in either
     // supported case.
-    afterEnter: function afterEnter() {
-      return this.reset();
+    afterEnter: function afterEnter(el) {
+      this.reset();
+      return this.$emit('afterEnter', el);
     },
     // Reset the state
     reset: function reset() {
