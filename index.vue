@@ -64,7 +64,6 @@ export default
 		# toggling close
 		beforeLeave: (el) ->
 			@height = el.clientHeight
-			console.log 'beforeLeave', @height
 			@isTweening = true
 
 		# When toggling, set the initial height to 0
