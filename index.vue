@@ -65,28 +65,37 @@ export default
 		beforeLeave: (el) ->
 			@height = el.clientHeight
 			@isTweening = true
+			@$emit 'beforeLeave', el
 
 		# When toggling, set the initial height to 0
-		beforeEnter: ->
+		beforeEnter: (el) ->
 			@isTweening = true
 			@height = 0 unless @switching
+			@$emit 'beforeEnter', el
 
 		# When leaving, if toggling, set the height to 0 after a tick.
 		leave: (el) ->
 			unless @switching then setTimeout (=> @height = 0), 0
+			@$emit 'leave', el
 
 		# When entering, always set the new height after a tick.
-		enter: (el) -> @$nextTick -> @height = el.clientHeight
+		enter: (el) ->
+			@$nextTick -> @height = el.clientHeight
+			@$emit 'enter', el
 
 		# Reset the state unless we're doing an out-in transition, in which case
 		# this should get triggered on enter.
-		afterLeave: -> @reset() unless @mode == 'out-in'
+		afterLeave: (el) ->
+			@reset() unless @mode == 'out-in'
+			@$emit 'afterLeave', el
 
 		# Clear the height after enter finishes in all cases. This is valid
 		# because either it's a toggle animation and this won't get called at all
 		# when v-if="false" or we're switching and it fires at the end in either
 		# supported case.
-		afterEnter: -> @reset()
+		afterEnter: (el) ->
+			@reset()
+			@$emit 'afterEnter', el
 
 		# Reset the state
 		reset: ->
