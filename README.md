@@ -115,7 +115,6 @@ export default {
 
 ## Notes
 
-- Uses [`classList`](https://developer.mozilla.org/en-US/docs/Web/API/Element/classList) so requires IE >= 10
 - To customize the height transition duration or other properties, define your own `height-tweening` CSS class.
 - Doesn't work with `in-out` mode transitions ... though not sure why someone would use those...
 - Expects a toggling transition to not use `mode`
