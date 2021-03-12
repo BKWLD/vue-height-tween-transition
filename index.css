@@ -1,6 +1,8 @@
-.height-tweening {
-  overflow: hidden;
-  transition: height 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+.height-tween {
   position: relative;
+  overflow: hidden;
+}
+.height-tween-active {
+  transition: height 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 

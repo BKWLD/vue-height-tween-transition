@@ -116,8 +116,8 @@ var render = function() {
   return _c(
     "div",
     {
-      staticClass: "height-tween-mask",
-      class: { "height-tweening": _vm.isTweening },
+      staticClass: "height-tween",
+      class: { "height-tween-active": _vm.isTweening },
       style: _vm.styles
     },
     [
@@ -153,13 +153,20 @@ One thing for me to remember is that when doing a toggling transition, only
 enter _or_ leave hooks are fired. And during mode="out-in", the beforeEnter is
 only fired after afterLeave finishes.
 */
-var defer;
 /* harmony default export */ var lib_vue_loader_options_indexvue_type_script_lang_coffee_ = ({
   props: {
     // The Vue transition that should be used
     name: String,
     // Same as Vue transition `mode` property
-    mode: String,
+    mode: {
+      type: String,
+      default: '',
+      validator: function validator(val) {
+        return val === 'out-in' || val === '';
+      }
+    },
+    // Do a switch style tween, rather than a toggle (the default)
+    switching: Boolean,
     // Same as Vue transition `duration` property
     duration: {
       type: Number,
@@ -170,8 +177,7 @@ var defer;
     return {
       height: null,
       // Stores the height that will be set on the parent
-      willLeave: false,
-      willEnter: false
+      isTweening: false
     };
   },
   computed: {
@@ -182,54 +188,38 @@ var defer;
           height: "".concat(this.height, "px")
         };
       }
-    },
-    // Are we currently tweening?
-    isTweening: function isTweening() {
-      return this.willEnter || this.willLeave;
-    },
-    // We can assume we're switching between elements if there is a mode or if
-    // we're both leaving and entering simultaneously
-    isSwitching: function isSwitching() {
-      return this.mode || this.willEnter && this.willLeave;
     }
   },
   methods: {
-    // When both of these are true, we can assume we're switching between
-    // two component simultaneously, like when mode="" but it's not a simple
-    // v-if toggle
-    beforeLeave: function beforeLeave() {
-      return this.willLeave = true;
+    // Capture the intial height when switching or the starting height when
+    // toggling close
+    beforeLeave: function beforeLeave(el) {
+      this.height = el.clientHeight;
+      console.log('beforeLeave', this.height);
+      return this.isTweening = true;
     },
+    // When toggling, set the initial height to 0
     beforeEnter: function beforeEnter() {
-      return this.willEnter = true;
+      this.isTweening = true;
+
+      if (!this.switching) {
+        return this.height = 0;
+      }
     },
-    // When leaving, always capture the height. If no new component is entering,
-    // set the height to 0 after a tick
+    // When leaving, if toggling, set the height to 0 after a tick.
     leave: function leave(el) {
       var _this = this;
 
-      this.height = el.clientHeight;
-
-      if (!this.isSwitching) {
-        return defer(function () {
+      if (!this.switching) {
+        return setTimeout(function () {
           return _this.height = 0;
-        });
+        }, 0);
       }
     },
-    // Unless we're switching children, start from a height of 0. Then, always
-    // wait a tick to expand.
+    // When entering, always set the new height after a tick.
     enter: function enter(el) {
-      var _this2 = this;
-
-      var height;
-      height = el.clientHeight;
-
-      if (!this.isSwitching) {
-        this.height = 0;
-      }
-
-      return defer(function () {
-        return _this2.height = height;
+      return this.$nextTick(function () {
+        return this.height = el.clientHeight;
       });
     },
     // Reset the state unless we're doing an out-in transition, in which case
@@ -249,14 +239,10 @@ var defer;
     // Reset the state
     reset: function reset() {
       this.height = null;
-      return this.willLeave = this.willEnter = false;
+      return this.isTweening = false;
     }
   }
-}); // Helper to call method after one tick
-
-defer = function defer(cb) {
-  return setTimeout(cb, 0);
-};
+});
 // CONCATENATED MODULE: ./index.vue?vue&type=script&lang=coffee&
  /* harmony default export */ var indexvue_type_script_lang_coffee_ = (lib_vue_loader_options_indexvue_type_script_lang_coffee_); 
 // EXTERNAL MODULE: ./index.vue?vue&type=style&index=0&lang=stylus&
