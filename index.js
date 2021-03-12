@@ -117,8 +117,7 @@ var render = function() {
     "div",
     {
       staticClass: "height-tween",
-      class: { "height-tween-active": _vm.isTweening },
-      style: _vm.styles
+      class: { "height-tween-active": _vm.isTweening }
     },
     [
       _c(
@@ -153,6 +152,7 @@ One thing for me to remember is that when doing a toggling transition, only
 enter _or_ leave hooks are fired. And during mode="out-in", the beforeEnter is
 only fired after afterLeave finishes.
 */
+var defer;
 /* harmony default export */ var lib_vue_loader_options_indexvue_type_script_lang_coffee_ = ({
   props: {
     // The Vue transition that should be used
@@ -175,55 +175,49 @@ only fired after afterLeave finishes.
   },
   data: function data() {
     return {
-      height: null,
-      // Stores the height that will be set on the parent
       isTweening: false
     };
-  },
-  computed: {
-    // Make the height style
-    styles: function styles() {
-      if (this.height !== null) {
-        return {
-          height: "".concat(this.height, "px")
-        };
-      }
-    }
   },
   methods: {
     // Capture the intial height when switching or the starting height when
     // toggling close
     beforeLeave: function beforeLeave(el) {
-      this.height = el.clientHeight;
+      this.$el.style.height = el.clientHeight + 'px';
       this.isTweening = true;
       return this.$emit('beforeLeave', el);
     },
     // When toggling, set the initial height to 0
     beforeEnter: function beforeEnter(el) {
-      this.isTweening = true;
+      return this.$nextTick(function () {
+        this.isTweening = true;
 
-      if (!this.switching) {
-        this.height = 0;
-      }
+        if (!this.switching) {
+          this.$el.style.height = 0;
+        }
 
-      return this.$emit('beforeEnter', el);
+        return this.$emit('beforeEnter', el);
+      });
     },
-    // When leaving, if toggling, set the height to 0 after a tick.
+    // When leaving, if toggling, set the height to 0 after a tick
     leave: function leave(el) {
-      var _this = this;
+      return this.$nextTick(function () {
+        var _this = this;
 
-      if (!this.switching) {
-        setTimeout(function () {
-          return _this.height = 0;
-        }, 0);
-      }
+        if (!this.switching) {
+          defer(function () {
+            return _this.$el.style.height = 0;
+          });
+        }
 
-      return this.$emit('leave', el);
+        return this.$emit('leave', el);
+      });
     },
     // When entering, always set the new height after a tick.
     enter: function enter(el) {
-      this.$nextTick(function () {
-        return this.height = el.clientHeight;
+      var _this2 = this;
+
+      defer(function () {
+        return _this2.$el.style.height = el.clientHeight + 'px';
       });
       return this.$emit('enter', el);
     },
@@ -250,7 +244,11 @@ only fired after afterLeave finishes.
       return this.isTweening = false;
     }
   }
-});
+}); // Wait a frame
+
+defer = function defer(cb) {
+  return setTimeout(cb, 0);
+};
 // CONCATENATED MODULE: ./index.vue?vue&type=script&lang=coffee&
  /* harmony default export */ var indexvue_type_script_lang_coffee_ = (lib_vue_loader_options_indexvue_type_script_lang_coffee_); 
 // EXTERNAL MODULE: ./index.vue?vue&type=style&index=0&lang=stylus&
