@@ -1,7 +1,7 @@
 // Storybook deps
 import { storiesOf, addDecorator } from '@storybook/vue'
-import { 
-  withKnobs, 
+import {
+  withKnobs,
   radios,
 } from '@storybook/addon-knobs'
 
@@ -15,22 +15,21 @@ const props = ({
 }) => { return {
   mode: { default: radios('mode', {
     'out-in': 'out-in',
-    'in-out': 'in-out',
-    'None': '',
+    // 'in-out': 'in-out', // I've never used this
+    'none': '',
   }, mode) },
 }}
 
 // Create a bucket of stories
 addDecorator(withKnobs)
 storiesOf('Examples', module)
-  
+
   .add('Triggered by :key', () => ({
     ...keyTriggered,
     props: props({})
   }))
-  
+
   .add('Triggered by :v-if', () => ({
-    ...ifTriggered,
-    props: props({})
+    ...ifTriggered
   }))
-  
+

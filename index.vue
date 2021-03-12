@@ -1,12 +1,11 @@
-<!--
-Tween the height of the parent of transitioning items
--->
+<!-- Tween the height of the parent of transitioning items -->
 
 <template lang='pug'>
 
 .height-tween-mask(
-	:class='{ "height-tweening": tweening }'
+	:class='{ "height-tweening": isTweening }'
 	:style='styles')
+
 	transition(
 		:duration='duration'
 		:name='name'
@@ -24,7 +23,12 @@ Tween the height of the parent of transitioning items
 <!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– -->
 
 <script lang='coffee'>
-module.exports =
+###
+One thing for me to remember is that when doing a toggling transition, only
+enter _or_ leave hooks are fired. And during mode="out-in", the beforeEnter is
+only fired after afterLeave finishes.
+###
+export default
 
 	props:
 
@@ -39,51 +43,61 @@ module.exports =
 			type: Number
 			default: null
 
-		open:
-			type: Boolean
-			default: true
-
 	data: ->
 		height: null # Stores the height that will be set on the parent
-		tweening: false # Are we currently tweening
+		willLeave: false
+		willEnter: false
 
 	computed:
 
 		# Make the height style
 		styles: -> height: "#{@height}px" if @height != null
 
-		# Are we transitioning to a new
+		# Are we currently tweening?
+		isTweening: -> @willEnter or @willLeave
+
+		# We can assume we're switching between elements if there is a mode or if
+		# we're both leaving and entering simultaneously
+		isSwitching: -> @mode or (@willEnter and @willLeave)
 
 	methods:
 
-		# Add clases to parent
-		beforeLeave: (el) -> @tweening = true
-		beforeEnter: (el) -> @tweening = true
+		# When both of these are true, we can assume we're switching between
+		# two component simultaneously, like when mode="" but it's not a simple
+		# v-if toggle
+		beforeLeave: -> @willLeave = true
+		beforeEnter: -> @willEnter = true
 
-		# If switching to a new slot, store the old height.  Else, store and then
-		# tween to 0
-		leave: (el) -> @$nextTick ->
+		# When leaving, always capture the height. If no new component is entering,
+		# set the height to 0 after a tick
+		leave: (el) ->
 			@height = el.clientHeight
-			setTimeout (=> @height = 0), 0 unless @$slots.default
+			unless @isSwitching then defer => @height = 0
 
-		# If we were closing (not transitioning to a new component), clear settings
-		afterLeave: (el) -> @reset() unless @$slots.default
+		# Unless we're switching children, start from a height of 0. Then, always
+		# wait a tick to expand.
+		enter: (el) ->
+			height = el.clientHeight
+			unless @isSwitching then @height = 0
+			defer => @height = height
 
-		# Capture the height of the entering element after waiting a tick to make
-		# sure DOM updates are finished.  Using setTimeout rather than nextTick so
-		# it fires a frame after the height change in "leave" in the case of a
-		# simultaneous (mode='') transition.
-		enter: (el) -> 
-			@height = 0 # Used when triggered by v-if
-			setTimeout (=> @height = el.clientHeight), 0
+		# Reset the state unless we're doing an out-in transition, in which case
+		# this should get triggered on enter.
+		afterLeave: -> @reset() unless @mode == 'out-in'
 
-		# Clear the height after the transition ends
-		afterEnter: (el) -> @reset()
+		# Clear the height after enter finishes in all cases. This is valid
+		# because either it's a toggle animation and this won't get called at all
+		# when v-if="false" or we're switching and it fires at the end in either
+		# supported case.
+		afterEnter: -> @reset()
 
 		# Reset the state
 		reset: ->
 			@height = null
-			@tweening = false
+			@willLeave = @willEnter = false
+
+# Helper to call method after one tick
+defer = (cb) -> setTimeout cb, 0
 
 </script>
 
@@ -94,6 +108,10 @@ module.exports =
 
 // Tween between heights
 .height-tweening
-  overflow hidden
-  transition height 0.3s ease-out-quad
+	overflow hidden
+	transition height 0.3s ease-out-quad
+
+	// If using mode="" with a position absolute *-leave-active
+	position relative
+
 </style>
