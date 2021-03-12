@@ -73,7 +73,8 @@ export default
 			@height = 0 unless @switching
 			@$emit 'beforeEnter', el
 
-		# When leaving, if toggling, set the height to 0 after a tick.
+		# When leaving, if toggling, set the height to 0 after a tick. Not really
+		# sure why this only worked properly with setTimeout rateher than nextTick.
 		leave: (el) ->
 			unless @switching then setTimeout (=> @height = 0), 0
 			@$emit 'leave', el
