@@ -82,124 +82,31 @@ module.exports =
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 5);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_node_modules_coffee_loader_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_script_lang_coffee___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_node_modules_coffee_loader_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_script_lang_coffee___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_babel_loader_lib_index_js_node_modules_coffee_loader_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_script_lang_coffee___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_babel_loader_lib_index_js_node_modules_coffee_loader_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_script_lang_coffee___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_babel_loader_lib_index_js_node_modules_coffee_loader_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_script_lang_coffee___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_node_modules_coffee_loader_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_script_lang_coffee___WEBPACK_IMPORTED_MODULE_0___default.a); 
-
-/***/ }),
-/* 1 */
-/***/ (function(module, exports) {
-
-module.exports = {
-  props: {
-    // The Vue transition that should be used
-    name: String,
-    // Same as Vue transition `mode` property
-    mode: String,
-    // Same as Vue transition `duration` property
-    duration: {
-      type: Number,
-      default: null
-    },
-    open: {
-      type: Boolean,
-      default: true
-    }
-  },
-  data: function data() {
-    return {
-      height: null,
-      // Stores the height that will be set on the parent
-      tweening: false // Are we currently tweening
-
-    };
-  },
-  computed: {
-    // Make the height style
-    styles: function styles() {
-      if (this.height !== null) {
-        return {
-          height: "".concat(this.height, "px")
-        };
-      }
-    }
-  },
-  // Are we transitioning to a new
-  methods: {
-    // Add clases to parent
-    beforeLeave: function beforeLeave(el) {
-      return this.tweening = true;
-    },
-    beforeEnter: function beforeEnter(el) {
-      return this.tweening = true;
-    },
-    // If switching to a new slot, store the old height.  Else, store and then
-    // tween to 0
-    leave: function leave(el) {
-      return this.$nextTick(function () {
-        var _this = this;
-
-        this.height = el.clientHeight;
-
-        if (!this.$slots.default) {
-          return setTimeout(function () {
-            return _this.height = 0;
-          }, 0);
-        }
-      });
-    },
-    // If we were closing (not transitioning to a new component), clear settings
-    afterLeave: function afterLeave(el) {
-      if (!this.$slots.default) {
-        return this.reset();
-      }
-    },
-    // Capture the height of the entering element after waiting a tick to make
-    // sure DOM updates are finished.  Using setTimeout rather than nextTick so
-    // it fires a frame after the height change in "leave" in the case of a
-    // simultaneous (mode='') transition.
-    enter: function enter(el) {
-      var _this2 = this;
-
-      this.height = 0; // Used when triggered by v-if
-
-      return setTimeout(function () {
-        return _this2.height = el.clientHeight;
-      }, 0);
-    },
-    // Clear the height after the transition ends
-    afterEnter: function afterEnter(el) {
-      return this.reset();
-    },
-    // Reset the state
-    reset: function reset() {
-      this.height = null;
-      return this.tweening = false;
-    }
-  }
-};
-
-/***/ }),
-/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 3 */
+/* 1 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_stylus_loader_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_lang_stylus___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(0);
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_stylus_loader_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_lang_stylus___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_stylus_loader_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_lang_stylus___WEBPACK_IMPORTED_MODULE_0__);
+/* unused harmony reexport * */
+ /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_stylus_loader_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_lang_stylus___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+/* 2 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
 
 // CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/pug-plain-loader!./node_modules/vue-loader/lib??vue-loader-options!./index.vue?vue&type=template&id=6de5ab34&lang=pug&
 var render = function() {
@@ -210,7 +117,7 @@ var render = function() {
     "div",
     {
       staticClass: "height-tween-mask",
-      class: { "height-tweening": _vm.tweening },
+      class: { "height-tweening": _vm.isTweening },
       style: _vm.styles
     },
     [
@@ -239,16 +146,123 @@ render._withStripped = true
 
 
 // CONCATENATED MODULE: ./index.vue?vue&type=template&id=6de5ab34&lang=pug&
-/* concated harmony reexport render */__webpack_require__.d(__webpack_exports__, "a", function() { return render; });
-/* concated harmony reexport staticRenderFns */__webpack_require__.d(__webpack_exports__, "b", function() { return staticRenderFns; });
 
+// CONCATENATED MODULE: ./node_modules/babel-loader/lib!./node_modules/coffee-loader!./node_modules/vue-loader/lib??vue-loader-options!./index.vue?vue&type=script&lang=coffee&
+/*
+One thing for me to remember is that when doing a toggling transition, only
+enter _or_ leave hooks are fired. And during mode="out-in", the beforeEnter is
+only fired after afterLeave finishes.
+*/
+var defer;
+/* harmony default export */ var lib_vue_loader_options_indexvue_type_script_lang_coffee_ = ({
+  props: {
+    // The Vue transition that should be used
+    name: String,
+    // Same as Vue transition `mode` property
+    mode: String,
+    // Same as Vue transition `duration` property
+    duration: {
+      type: Number,
+      default: null
+    }
+  },
+  data: function data() {
+    return {
+      height: null,
+      // Stores the height that will be set on the parent
+      willLeave: false,
+      willEnter: false
+    };
+  },
+  computed: {
+    // Make the height style
+    styles: function styles() {
+      if (this.height !== null) {
+        return {
+          height: "".concat(this.height, "px")
+        };
+      }
+    },
+    // Are we currently tweening?
+    isTweening: function isTweening() {
+      return this.willEnter || this.willLeave;
+    },
+    // We can assume we're switching between elements if there is a mode or if
+    // we're both leaving and entering simultaneously
+    isSwitching: function isSwitching() {
+      return this.mode || this.willEnter && this.willLeave;
+    }
+  },
+  methods: {
+    // When both of these are true, we can assume we're switching between
+    // two component simultaneously, like when mode="" but it's not a simple
+    // v-if toggle
+    beforeLeave: function beforeLeave() {
+      return this.willLeave = true;
+    },
+    beforeEnter: function beforeEnter() {
+      return this.willEnter = true;
+    },
+    // When leaving, always capture the height. If no new component is entering,
+    // set the height to 0 after a tick
+    leave: function leave(el) {
+      var _this = this;
 
-/***/ }),
-/* 4 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+      this.height = el.clientHeight;
 
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return normalizeComponent; });
+      if (!this.isSwitching) {
+        return defer(function () {
+          return _this.height = 0;
+        });
+      }
+    },
+    // Unless we're switching children, start from a height of 0. Then, always
+    // wait a tick to expand.
+    enter: function enter(el) {
+      var _this2 = this;
+
+      var height;
+      height = el.clientHeight;
+
+      if (!this.isSwitching) {
+        this.height = 0;
+      }
+
+      return defer(function () {
+        return _this2.height = height;
+      });
+    },
+    // Reset the state unless we're doing an out-in transition, in which case
+    // this should get triggered on enter.
+    afterLeave: function afterLeave() {
+      if (this.mode !== 'out-in') {
+        return this.reset();
+      }
+    },
+    // Clear the height after enter finishes in all cases. This is valid
+    // because either it's a toggle animation and this won't get called at all
+    // when v-if="false" or we're switching and it fires at the end in either
+    // supported case.
+    afterEnter: function afterEnter() {
+      return this.reset();
+    },
+    // Reset the state
+    reset: function reset() {
+      this.height = null;
+      return this.willLeave = this.willEnter = false;
+    }
+  }
+}); // Helper to call method after one tick
+
+defer = function defer(cb) {
+  return setTimeout(cb, 0);
+};
+// CONCATENATED MODULE: ./index.vue?vue&type=script&lang=coffee&
+ /* harmony default export */ var indexvue_type_script_lang_coffee_ = (lib_vue_loader_options_indexvue_type_script_lang_coffee_); 
+// EXTERNAL MODULE: ./index.vue?vue&type=style&index=0&lang=stylus&
+var indexvue_type_style_index_0_lang_stylus_ = __webpack_require__(1);
+
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
 /* globals __VUE_SSR_CONTEXT__ */
 
 // IMPORTANT: Do NOT use ES2015 features in this file (except for modules).
@@ -343,18 +357,7 @@ function normalizeComponent (
   }
 }
 
-
-/***/ }),
-/* 5 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _index_vue_vue_type_template_id_6de5ab34_lang_pug___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3);
-/* harmony import */ var _index_vue_vue_type_script_lang_coffee___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(0);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _index_vue_vue_type_script_lang_coffee___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _index_vue_vue_type_script_lang_coffee___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _index_vue_vue_type_style_index_0_lang_stylus___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(6);
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(4);
+// CONCATENATED MODULE: ./index.vue
 
 
 
@@ -363,10 +366,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"])(
-  _index_vue_vue_type_script_lang_coffee___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _index_vue_vue_type_template_id_6de5ab34_lang_pug___WEBPACK_IMPORTED_MODULE_0__[/* render */ "a"],
-  _index_vue_vue_type_template_id_6de5ab34_lang_pug___WEBPACK_IMPORTED_MODULE_0__[/* staticRenderFns */ "b"],
+var component = normalizeComponent(
+  indexvue_type_script_lang_coffee_,
+  render,
+  staticRenderFns,
   false,
   null,
   null,
@@ -377,17 +380,7 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 /* hot reload */
 if (false) { var api; }
 component.options.__file = "index.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-/* 6 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_stylus_loader_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_lang_stylus___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2);
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_stylus_loader_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_lang_stylus___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_stylus_loader_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_lang_stylus___WEBPACK_IMPORTED_MODULE_0__);
-/* unused harmony reexport * */
- /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_stylus_loader_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_lang_stylus___WEBPACK_IMPORTED_MODULE_0___default.a); 
+/* harmony default export */ var index = __webpack_exports__["default"] = (component.exports);
 
 /***/ })
 /******/ ]);
