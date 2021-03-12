@@ -2,10 +2,10 @@
 
 <template lang='pug'>
 
-.height-tween(
-	:class='{ "height-tween-active": isTweening }'
-	:style='styles')
+//- Height style rules will be applied here
+.height-tween(:class='{ "height-tween-active": isTweening }')
 
+	//- Run the user's transition
 	transition(
 		:duration='duration'
 		:name='name'
@@ -16,6 +16,8 @@
 		@beforeEnter='beforeEnter'
 		@enter='enter'
 		@afterEnter='afterEnter')
+
+		//- The toggling/switching children
 		slot
 
 </template>
@@ -49,39 +51,31 @@ export default
 			type: Number
 			default: null
 
-	data: ->
-		height: null # Stores the height that will be set on the parent
-		isTweening: false
-
-	computed:
-
-		# Make the height style
-		styles: -> height: "#{@height}px" if @height != null
+	data: -> isTweening: false
 
 	methods:
 
 		# Capture the intial height when switching or the starting height when
 		# toggling close
 		beforeLeave: (el) ->
-			@height = el.clientHeight
+			@$el.style.height = el.clientHeight + 'px'
 			@isTweening = true
 			@$emit 'beforeLeave', el
 
 		# When toggling, set the initial height to 0
-		beforeEnter: (el) ->
+		beforeEnter: (el) -> @$nextTick ->
 			@isTweening = true
-			@height = 0 unless @switching
+			@$el.style.height = 0 unless @switching
 			@$emit 'beforeEnter', el
 
-		# When leaving, if toggling, set the height to 0 after a tick. Not really
-		# sure why this only worked properly with setTimeout rateher than nextTick.
-		leave: (el) ->
-			unless @switching then setTimeout (=> @height = 0), 0
+		# When leaving, if toggling, set the height to 0 after a tick
+		leave: (el) -> @$nextTick ->
+			unless @switching then defer => @$el.style.height = 0
 			@$emit 'leave', el
 
 		# When entering, always set the new height after a tick.
 		enter: (el) ->
-			@$nextTick -> @height = el.clientHeight
+			defer => @$el.style.height = el.clientHeight + 'px'
 			@$emit 'enter', el
 
 		# Reset the state unless we're doing an out-in transition, in which case
@@ -102,6 +96,9 @@ export default
 		reset: ->
 			@height = null
 			@isTweening = false
+
+# Wait a frame
+defer = (cb) -> setTimeout cb, 0
 
 </script>
 
