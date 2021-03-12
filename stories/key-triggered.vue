@@ -7,7 +7,7 @@ Transition based on key
 div
 	button(@click='next') Next ({{ mode || 'none' }})
 	.box(:class='"mode-"+(mode || "none")')
-		height-tween(name='fade' :mode='mode')
+		height-tween(name='fade' :mode='mode' switching)
 			div(:key='active') {{ quotes[active] }}
 
 </template>

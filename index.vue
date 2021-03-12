@@ -2,8 +2,8 @@
 
 <template lang='pug'>
 
-.height-tween-mask(
-	:class='{ "height-tweening": isTweening }'
+.height-tween(
+	:class='{ "height-tween-active": isTweening }'
 	:style='styles')
 
 	transition(
@@ -36,7 +36,13 @@ export default
 		name: String
 
 		# Same as Vue transition `mode` property
-		mode: String
+		mode:
+			type: String
+			default: ''
+			validator: (val) -> val in ['out-in', '']
+
+		# Do a switch style tween, rather than a toggle (the default)
+		switching: Boolean
 
 		# Same as Vue transition `duration` property
 		duration:
@@ -45,41 +51,33 @@ export default
 
 	data: ->
 		height: null # Stores the height that will be set on the parent
-		willLeave: false
-		willEnter: false
+		isTweening: false
 
 	computed:
 
 		# Make the height style
 		styles: -> height: "#{@height}px" if @height != null
 
-		# Are we currently tweening?
-		isTweening: -> @willEnter or @willLeave
-
-		# We can assume we're switching between elements if there is a mode or if
-		# we're both leaving and entering simultaneously
-		isSwitching: -> @mode or (@willEnter and @willLeave)
-
 	methods:
 
-		# When both of these are true, we can assume we're switching between
-		# two component simultaneously, like when mode="" but it's not a simple
-		# v-if toggle
-		beforeLeave: -> @willLeave = true
-		beforeEnter: -> @willEnter = true
-
-		# When leaving, always capture the height. If no new component is entering,
-		# set the height to 0 after a tick
-		leave: (el) ->
+		# Capture the intial height when switching or the starting height when
+		# toggling close
+		beforeLeave: (el) ->
 			@height = el.clientHeight
-			unless @isSwitching then defer => @height = 0
+			console.log 'beforeLeave', @height
+			@isTweening = true
 
-		# Unless we're switching children, start from a height of 0. Then, always
-		# wait a tick to expand.
-		enter: (el) ->
-			height = el.clientHeight
-			unless @isSwitching then @height = 0
-			defer => @height = height
+		# When toggling, set the initial height to 0
+		beforeEnter: ->
+			@isTweening = true
+			@height = 0 unless @switching
+
+		# When leaving, if toggling, set the height to 0 after a tick.
+		leave: (el) ->
+			unless @switching then setTimeout (=> @height = 0), 0
+
+		# When entering, always set the new height after a tick.
+		enter: (el) -> @$nextTick -> @height = el.clientHeight
 
 		# Reset the state unless we're doing an out-in transition, in which case
 		# this should get triggered on enter.
@@ -94,10 +92,7 @@ export default
 		# Reset the state
 		reset: ->
 			@height = null
-			@willLeave = @willEnter = false
-
-# Helper to call method after one tick
-defer = (cb) -> setTimeout cb, 0
+			@isTweening = false
 
 </script>
 
@@ -106,12 +101,13 @@ defer = (cb) -> setTimeout cb, 0
 <style lang='stylus'>
 @import '~bukwild-stylus-library'
 
-// Tween between heights
-.height-tweening
+// Apply masking
+.height-tween
+	position relative // Used with switching and position absolute *-leave-active
 	overflow hidden
-	transition height 0.3s ease-out-quad
 
-	// If using mode="" with a position absolute *-leave-active
-	position relative
+// Transition added while tweening
+.height-tween-active
+	transition height 0.3s ease-out-quad
 
 </style>
