@@ -240,7 +240,7 @@ var defer;
     },
     // Reset the state
     reset: function reset() {
-      this.height = null;
+      this.$el.style.height = '';
       return this.isTweening = false;
     }
   }
