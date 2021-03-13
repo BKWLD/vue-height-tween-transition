@@ -94,7 +94,7 @@ export default
 
 		# Reset the state
 		reset: ->
-			@height = null
+			@$el.style.height = ''
 			@isTweening = false
 
 # Wait a frame
