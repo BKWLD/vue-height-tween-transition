@@ -1,54 +1,27 @@
 {
   "name": "vue-height-tween-transition",
-  "version": "2.1.2",
+  "version": "3.0.0",
   "description": "Tween the height of the parent of transitioning items",
   "main": "index.js",
-  "repository": "git@github.com:BKWLD/vue-height-tween-transition.git",
-  "author": "Bukwild <info@bukwild.com>",
-  "license": "MIT",
+  "type": "module",
   "devDependencies": {
-    "@babel/core": "^7.4.3",
-    "@babel/preset-env": "^7.4.3",
-    "@storybook/addon-knobs": "^5.0.6",
-    "@storybook/addons": "^5.0.6",
-    "@storybook/storybook-deployer": "^2.8.1",
-    "@storybook/vue": "^5.0.6",
-    "babel-loader": "^8.0.5",
-    "babel-preset-vue": "^2.0.2",
-    "bukwild-stylus-library": "^1.1.0",
-    "chromedriver": "^119.0",
-    "coffee-loader": "^0.9.0",
-    "coffeescript": "^2.4.0",
-    "cross-spawn": "^5.0.1",
-    "css-loader": "^2.1.1",
-    "express": "^4.14.0",
-    "express-urlrewrite": "^1.2.0",
-    "mini-css-extract-plugin": "^0.5.0",
-    "nightwatch": "^0.9.9",
-    "pug": "3.0.1",
-    "pug-plain-loader": "^1.1.0",
-    "selenium-server": "^2.53.1",
-    "style-loader": "^0.13.1",
-    "stylus": "^0.54.5",
-    "stylus-loader": "^3.0.2",
-    "vue": "^2.6.10",
-    "vue-loader": "^15.7.0",
-    "vue-style-loader": "^4.1.2",
-    "vue-template-compiler": "^2.6.10",
-    "webpack": "^4.29.6",
-    "webpack-cli": "^3.3.0",
-    "webpack-dev-middleware": "^3.6.1",
-    "webpack-node-externals": "^1.7.2"
-  },
-  "peerDependencies": {
-    "vue": "2.x"
+    "@vitejs/plugin-vue": "^5.0.4",
+    "typescript": "^5.4.2",
+    "vite": "^5.1.6",
+    "vue": "^3.4.21"
   },
   "scripts": {
-    "build": "webpack",
-    "version": "npm run build && git add -A",
-    "postversion": "git push --follow-tags && yarn deploy-storybook",
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook",
-    "deploy-storybook": "storybook-to-ghpages"
-  }
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/BKWLD/vue-height-tween-transition.git"
+  },
+  "author": "Bukwild <info@bukwild.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/BKWLD/vue-height-tween-transition/issues"
+  },
+  "homepage": "https://github.com/BKWLD/vue-height-tween-transition#readme"
 }
