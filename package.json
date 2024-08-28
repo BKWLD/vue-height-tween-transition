@@ -25,7 +25,7 @@
     "express-urlrewrite": "^1.2.0",
     "mini-css-extract-plugin": "^0.5.0",
     "nightwatch": "^0.9.9",
-    "pug": "3.0.1",
+    "pug": "3.0.3",
     "pug-plain-loader": "^1.1.0",
     "selenium-server": "^2.53.1",
     "style-loader": "^0.13.1",
